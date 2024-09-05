@@ -238,11 +238,11 @@ getLocationBtn.addEventListener('click', () => {
 		const lat = position.coords.latitude
 		const long = position.coords.longitude
 
-		const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&format=json`
+		const url = `https://api.opencagedata.com/geocode/v1/json?key=e905ec19ce5d46c3a0e9d11f19545641&q=${lat}+${long}&pretty=1&no_annotations=1#`
 		fetch(url)
 			.then((response) => response.json())
 			.then(async (data) => {
-				const postal = data.address.postcode
+				const postal = data.results[0].components.postcode
 				if (postal.length === 6) {
 					const data = await pincodeApiCall(postal)
 					UiUpdate(data, postal)
